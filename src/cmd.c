@@ -53,7 +53,7 @@
  *
  * @param usbd_dev USB device
  */
-static void cmd_info(usbd_device *usbd_dev);
+static inline void cmd_info(usbd_device *usbd_dev);
 
 /**
  * @brief Handle CMD_FREQ command
@@ -63,7 +63,7 @@ static void cmd_info(usbd_device *usbd_dev);
  *
  * @param commands Command data
  */
-static void cmd_freq(const uint8_t *commands);
+static inline void cmd_freq(const uint8_t *commands);
 
 /**
  * @brief Handle CMD_XFER command
@@ -73,7 +73,7 @@ static void cmd_freq(const uint8_t *commands);
  * @param usbd_dev USB device
  * @param commands Command data
  */
-static void cmd_xfer(usbd_device *usbd_dev, const uint8_t *commands);
+static inline void cmd_xfer(usbd_device *usbd_dev, const uint8_t *commands);
 
 /**
  * @brief Handle CMD_SETSIG command
@@ -82,7 +82,7 @@ static void cmd_xfer(usbd_device *usbd_dev, const uint8_t *commands);
  *
  * @param commands Command data
  */
-static void cmd_setsig(const uint8_t *commands);
+static inline void cmd_setsig(const uint8_t *commands);
 
 /**
  * @brief Handle CMD_GETSIG command
@@ -91,7 +91,7 @@ static void cmd_setsig(const uint8_t *commands);
  * 
  * @param usbd_dev USB device
  */
-static void cmd_getsig(usbd_device *usbd_dev);
+static inline void cmd_getsig(usbd_device *usbd_dev);
 
 /**
  * @brief Handle CMD_CLK command
@@ -100,7 +100,7 @@ static void cmd_getsig(usbd_device *usbd_dev);
  *
  * @param commands Command data
  */
-static void cmd_clk(const uint8_t *commands);
+static inline void cmd_clk(const uint8_t *commands);
 
 uint8_t cmd_handle(usbd_device *usbd_dev, const usbd_transfer *transfer) {
   uint8_t *commands;
@@ -149,17 +149,17 @@ uint8_t cmd_handle(usbd_device *usbd_dev, const usbd_transfer *transfer) {
   return 1;
 }
 
-static void cmd_info(usbd_device *usbd_dev) {
+static inline void cmd_info(usbd_device *usbd_dev) {
   char info_string[64] = "DJTAG1\n";
 
   usb_send(usbd_dev, (uint8_t*)info_string, 64);
 }
 
-static void cmd_freq(const uint8_t *commands) {
+static inline void cmd_freq(const uint8_t *commands) {
   jtag_set_frequency((commands[1] << 8) | commands[2]);
 }
 
-static void cmd_xfer(usbd_device *usbd_dev, const uint8_t *commands) {
+static inline void cmd_xfer(usbd_device *usbd_dev, const uint8_t *commands) {
   uint8_t transferred_bits;
   uint8_t output_buffer[32];
   
@@ -175,7 +175,7 @@ static void cmd_xfer(usbd_device *usbd_dev, const uint8_t *commands) {
   usb_send(usbd_dev, output_buffer, 32);
 }
 
-static void cmd_setsig(const uint8_t *commands) {
+static inline void cmd_setsig(const uint8_t *commands) {
   uint8_t signal_mask, signal_status;
 
   signal_mask = commands[1];
@@ -202,7 +202,7 @@ static void cmd_setsig(const uint8_t *commands) {
   }
 }
 
-static void cmd_getsig(usbd_device *usbd_dev) {
+static inline void cmd_getsig(usbd_device *usbd_dev) {
   uint8_t signal_status = 0;
   
   if (jtag_get_tdo()) {
@@ -212,7 +212,7 @@ static void cmd_getsig(usbd_device *usbd_dev) {
   usb_send(usbd_dev, &signal_status, 1);
 }
 
-static void cmd_clk(const uint8_t *commands) {
+static inline void cmd_clk(const uint8_t *commands) {
   uint8_t signals, clk_pulses, i;
 
   signals = commands[1];
