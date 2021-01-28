@@ -18,7 +18,7 @@ If you prefer OpenOCD to UrJTAG, I suggest using Zoobab's fork of Versaloon firm
 | Olimex STM32-H103                              |
 |:----------------------------------------------:|
 | ![STM32-H103 icon](docs/img/stm32h103-128.jpg) |
-| [Instructions](docs/install-stm32h103.md)      |
+| No instructions yet                            |
 
 ## Software compatible with DirtyJTAG
 
